@@ -1,0 +1,126 @@
+{% extends "basic.html" %}
+{% block title %}To-do{% endblock title %}
+{% block content %}
+{% load django_bootstrap5 %}
+
+<style>
+  .gradient-custom-2 {
+    /* fallback for old browsers */
+    background: #7e40f6;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right,
+        rgba(126, 64, 246, 1),
+        rgba(80, 139, 252, 1));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right,
+        rgba(126, 64, 246, 1),
+        rgba(80, 139, 252, 1));
+  }
+
+  .mask-custom {
+    background: rgba(24, 24, 16, 0.2);
+    border-radius: 2em;
+    backdrop-filter: blur(25px);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    background-clip: padding-box;
+    box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+  }
+</style>
+
+
+<section class=" gradient-custom-2">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-12 col-xl-10">
+        {% bootstrap_messages %}
+
+        <div class="card mask-custom ">
+
+          <div class="container">
+
+            <form action="" method="post">
+              {% csrf_token %}
+
+              {% bootstrap_form form %}
+
+              <button class="btn btn-primary" type="submit">Post</button>
+
+            </form>
+
+          </div>
+          <div class="card-body p-4 text-white overflow-scroll ">
+
+            <table class="table text-white mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">Your Name</th>
+                  <th scope="col">Task</th>
+                  <th scope="col">Priority</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+
+              {% for task in tasks %}
+              <tbody>
+                <tr class="fw-normal">
+                  <th>
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                      alt="avatar 1" style="width: 45px; height: auto;">
+                    <span class="ms-2">{{request.user}}</span>
+                  </th>
+                  <td class="align-middle">
+                    <span>{{task.your_task}}</span>
+                  </td>
+                  <td class="align-middle">
+                    <h6 class="mb-0"><span class="badge bg-danger">{{task.priority}}</span></h6>
+                  </td>
+                  <td class="align-middle">
+                    {% comment %} <a href="#!" data-mdb-toggle="tooltip" title="Done"><i class="bi bi-check2"><svg
+                          xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor"
+                          class="bi bi-check2" viewBox="0 0 16 16">
+                          <path
+                            d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+                        </svg></a> {% endcomment %}
+                    <a href="{% url 'delete' task.sno %}" data-mdb-toggle="tooltip" title="Remove"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="27" height="27" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                        <path
+                          d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+                        </svbadgeg></a>
+                  </td>
+                </tr>
+                <!-- Repeat similar rows for other tasks and team members -->
+              </tbody>
+
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+
+  a = document.getElementsByClassName('badge')
+  b = Array.from(a)
+  console.log(b)
+
+  for (x of b) {
+    if (x.innerText == "Medium") {
+      x.className = "badge bg-primary"
+
+    } else if (x.innerText == "Basic") {
+
+      x.className = "badge bg-secondary"
+
+    }
+  }
+</script>
+
+
+
+
+{% endblock content %}
